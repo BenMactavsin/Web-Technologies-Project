@@ -2,6 +2,15 @@ body {
 	padding-top: 4.5rem;
 }
 
+main {
+	margin-bottom: 3.0rem;
+}
+
 ol.carousel-indicators {
 	list-style-type: none;
+}
+
+image {
+	max-width: 100%;
+	height: auto;
 }
