@@ -2,12 +2,3 @@ body {
 	padding-top: 4.5rem;
 	padding-bottom: 4.5rem;
 }
-
-ol.carousel-indicators {
-	list-style-type: none;
-}
-
-image {
-	max-width: 100%;
-	height: auto;
-}
