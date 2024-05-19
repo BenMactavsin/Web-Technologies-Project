@@ -96,7 +96,7 @@
 
 				<input type="submit" class="btn btn-primary" value="Gönder (JS)" id="js-submit">
 				<input type="submit" class="btn btn-primary" value="Gönder (Framework)" id="framework-submit" ng-disabled="!validate_framework()">
-				<input type="reset" class="btn btn-primary" value="Temizle">
+				<input type="reset" class="btn btn-primary" value="Temizle" ng-click="resetForm()">
 			</form>
 		</main>
 
@@ -181,17 +181,28 @@
 				};
 
 				$scope.testEmail = function() {
-					return email_regex.test($scope.email.trim());
+					return email_regex.test(($scope.email ?? "").trim());
 				};
 
 				$scope.testTel = function() {
-					return tel_regex.test($scope.tel.replaceAll(/\s/g, ""));
+					return tel_regex.test(($scope.tel ?? "").replaceAll(/\s/g, ""));
 				};
 
 				$scope.validate_framework = function() {
 					return !$scope.isEmpty($scope.name) && !$scope.isUndefinedNullOrValue($scope.gender) && $scope.testEmail() && $scope.testTel()
 						&& !$scope.isUndefinedNullOrValue($scope.category, "none") && !$scope.isEmpty($scope.message);
 				};
+
+				$scope.resetForm = function() {
+					//Reset button doesn't rerun ng-show and ng-disabled, so I have to do this
+					$scope.name = "";
+					$scope.gender = undefined;
+					$scope.email = "";
+					$scope.tel = "";
+					$scope.category = "none";
+					$scope.message = "";
+					$scope.kvkk = false;
+    		};
 			})
 
 			//Enabling the form
