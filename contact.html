@@ -34,6 +34,64 @@
 				</div>
 			</nav>
 		</header>
+
+		<main class="container">
+			<form id="form" action="/contact.php" method="post" onsubmit="js:on_form_submit(event);" inert>
+				<div class="mb-3">
+					<label for="name">Ad-Soyad:</label><br>
+					<input type="text" class="form-control" id="name" name="name">
+				</div>
+
+				<div class="mb-3">
+					<label>Cinsiyet:</label><br>
+					<input type="radio" class="form-check-input" id="gender-male" name="gender" value="male">
+					<label class="form-check-label" for="gender-male">Erkek</label><br>
+
+					<input type="radio" class="form-check-input" id="gender-female" name="gender" value="female">
+					<label class="form-check-label" for="gender-female">Kadın</label><br>
+
+					<input type="radio" class="form-check-input" id="gender-other" name="gender" value="other">
+					<label class="form-check-label" for="gender-other">Diğer</label>
+				</div>
+
+				<div class="mb-3">
+					<label for="email">E-Posta:</label><br>
+					<input type="text" inputmode="email" class="form-control" id="email" name="email">
+				</div>
+
+				<div class="mb-3">
+					<label for="tel">Telefon Numarası:</label><br>
+					<input type="text" inputmode="tel" class="form-control" id="tel" name="tel">
+				</div>
+
+				<div class="mb-3">
+					<label for="category">Kategori:</label>
+					<select class="form-control" id="category" name="category">
+						<option value="none" selected>Seç...</option>
+						<option value="ideas">Fikirler ve Öneriler</option>
+						<option value="bug-report">Hata Raporu</option>
+						<option value="other">Diğer</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label for="message">Mesaj:</label><br>
+					<textarea class="form-control" id="message" name="message" rows="5"></textarea>
+				</div>
+
+				<div class="mb-3">
+					<input class="form-check-input" type="checkbox" id="kvkk" name="kvkk">
+					<label class="form-check-label" for="kvkk">
+						Kişisel verilerimin işlenmesine yönelik aydınlatma metnini okudum ve anladım.
+					</label>
+				</div>
+
+				<input type="submit" class="btn btn-primary" value="Gönder (JS)" id="js-submit">
+				<input type="submit" class="btn btn-primary" value="Gönder (Framework)" id="framework-submit">
+				<input type="reset" class="btn btn-primary" value="Temizle">
+			</form>
+		</main>
+
 		<footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">
 			<div class="container">
 				<span class="text-body-secondary">Ayhan Dalkıran @ 2024</span>
@@ -42,5 +100,83 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<script>
+			const name_input = document.getElementById("name");
+
+			const gender_male_input = document.getElementById("gender-male");
+			const gender_female_input = document.getElementById("gender-female");
+			const gender_other_input = document.getElementById("gender-other");
+
+			const email_input = document.getElementById("email");
+			const tel_input = document.getElementById("tel");
+			const category_input = document.getElementById("category");
+			const message_input = document.getElementById("message");
+			const kvkk_input = document.getElementById("kvkk");
+
+			const js_submit = document.getElementById("js-submit");
+			const framework_submit = document.getElementById("framework-submit");
+
+			const email_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+			const tel_regex = /^(?:\+90|0)?\(?\d{3}\)?\d{7}$/;
+
+			function on_form_submit(submitEvent) {
+				if (submitEvent.submitter === js_submit) {
+					if (!validate_js())
+						event.preventDefault();
+				}
+				else if (submitEvent.submitter === framework_submit) {
+					if (!validate_framework())
+						event.preventDefault();
+				}
+				else {
+					alert("Bilinmeyen submitter: " + submitEvent.submitter);
+				}
+			}
+
+			function validate_js() {
+				let name = name_input.value?.trim() ?? "";
+				let gender_checked = gender_male_input.checked || gender_female_input.checked || gender_other_input.checked;
+				let email = email_input.value?.trim() ?? "";
+				let tel = tel_input.value?.replaceAll(/\s/g, "") ?? "";
+				let category_selected = category_input.value !== "none";
+				let message = message_input.value?.trim() ?? "";
+
+				if (name === "") {
+					alert("Ad-Soyad boş olamaz!")
+					return false;
+				}
+				else if (!gender_checked) {
+					alert("Cinsiyet seçmeniz gerekiyor!")
+					return false;
+				}
+				else if (!email_regex.test(email)) {
+					alert("Geçersiz e-posta formatı!")
+					return false;
+				}
+				else if (!tel_regex.test(tel)) {
+					alert("Geçersiz telefon numarası formatı!")
+					return false;
+				}
+				else if (!category_selected) {
+					alert("Kategori seçmeniz gerekiyor!")
+					return false;
+				}
+				else if (message === "") {
+					alert("Mesaj boş olamaz!")
+					return false;
+				}
+				else
+					return true;
+			}
+
+			function validate_framework() {
+				alert("Bu fonksiyon daha uygulanmadı!");
+				return false;
+			}
+
+			//Enabling the form
+			document.getElementById("form").inert = false;
+		</script>
 	</body>
 </html>
