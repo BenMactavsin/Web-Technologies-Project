@@ -36,6 +36,8 @@
 		</header>
 
 		<main class="container">
+			<h1 class="mb-4">Giriş</h1>
+
 			<?php
 			if (isset($_POST["username"]) && isset($_POST["password"])) {
 				if (strtolower($_POST["username"]) != "g221210020@sakarya.edu.tr") {
