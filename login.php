@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 	<head>
 		<title>Giriş</title>
 		<meta charset="utf-8">
