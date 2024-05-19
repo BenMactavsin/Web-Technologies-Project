@@ -138,7 +138,8 @@
 				let gender_checked = gender_male_input.checked || gender_female_input.checked || gender_other_input.checked;
 				let email = email_input.value?.trim() ?? "";
 				let tel = tel_input.value?.replaceAll(/\s/g, "") ?? "";
-				let category_selected = category_input.value !== "none" && category_input.value !== "";
+				//This is cursed, why does angular have to be this way?
+				let category_selected = category_input.value !== "? undefined:undefined ?" && category_input.value !== "none" && category_input.value !== "";
 				let message = message_input.value?.trim() ?? "";
 
 				if (name === "") {
@@ -146,23 +147,23 @@
 					return false;
 				}
 				else if (!gender_checked) {
-					alert("Cinsiyet seçmeniz gerekiyor!")
+					alert("Cinsiyet seçmeniz gerekiyor!");
 					return false;
 				}
 				else if (!email_regex.test(email)) {
-					alert("Geçersiz e-posta formatı!")
+					alert("Geçersiz e-posta formatı!");
 					return false;
 				}
 				else if (!tel_regex.test(tel)) {
-					alert("Geçersiz telefon numarası formatı!")
+					alert("Geçersiz telefon numarası formatı!");
 					return false;
 				}
 				else if (!category_selected) {
-					alert("Kategori seçmeniz gerekiyor!")
+					alert("Kategori seçmeniz gerekiyor!");
 					return false;
 				}
 				else if (message === "") {
-					alert("Mesaj boş olamaz!")
+					alert("Mesaj boş olamaz!");
 					return false;
 				}
 				else
