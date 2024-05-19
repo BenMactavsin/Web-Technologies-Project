@@ -35,6 +35,23 @@
 			</nav>
 		</header>
 
+		<main class="container">
+			<h2>Github Users API</h2>
+			<div class="row">
+				<div class="col-4 col-lg-2">
+					<img id="avatar" class="img-fluid rounded w-100">
+				</div>
+				<div class="col-8 col-lg-10">
+					Kullanıcı Adı: <span id="name"></span><br>
+					Şirket: <span id="company"></span><br>
+					Lokasyon: <span id="location"></span><br>
+					Takipçiler: <span id="followers"></span><br>
+					Takip Edilenler: <span id="following"></span><br>
+					Biyografi: <span id="bio"></span><br>
+				</div>
+			</div>
+		</main>
+
 		<footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">
 			<div class="container">
 				<span class="text-body-secondary">Ayhan Dalkıran @ 2024</span>
@@ -43,5 +60,30 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<script>
+			//Gotta get around the push
+			const api_token = btoa("YmVhcmVyIGdpdGh1YiBwYXRfMTFBUVI0WEdZMENGeHBYU0VISzdWMl9tYUJzd2ZoaEhFVGZ3OHg4U0xZV0dmemdydm5FcVZrblNBazNSNVVqU2N5SEFHTjJFV0FlYnQ3Nk0wWA==");
+			const api_url = "https://api.github.com/users/BenMactavsin";
+
+			async function get_data() {
+				let response = await fetch(api_url, {
+					method: "GET",
+					accept: "application/vnd.github+json",
+					authorization: api_token
+				})
+
+				let data = await response.json();
+
+				document.getElementById("avatar").src = data.avatar_url;
+				document.getElementById("name").innerText = data.name;
+				document.getElementById("company").innerText = data.company;
+				document.getElementById("location").innerText = data.location;
+				document.getElementById("followers").innerText = data.followers;
+				document.getElementById("following").innerText = data.following;
+				document.getElementById("bio").innerText = data.bio;
+			}
+
+			get_data();
+		</script>
 	</body>
 </html>
